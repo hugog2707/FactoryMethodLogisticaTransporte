@@ -1,4 +1,18 @@
 package com.demo.FactoryMethodLogisticaTransporte.logistica;
 
-public class LogisticaMar {
+import com.demo.FactoryMethodLogisticaTransporte.transporte.Barco;
+import com.demo.FactoryMethodLogisticaTransporte.transporte.Transporte;
+
+public class LogisticaMar extends Logistica {
+    @Override
+    public void planEntrega() {
+        // Implementación específica para logística marítima
+    }
+
+    @Override
+    public Transporte fabrica() {
+        // Implementación específica para crear transporte marítimo
+        return new Barco();
+    }
+    // Otros métodos y atributos específicos de la logística marítima
 }
