@@ -3,17 +3,22 @@ package com.demo.FactoryMethodLogisticaTransporte.logistica;
 import com.demo.FactoryMethodLogisticaTransporte.transporte.Carro;
 import com.demo.FactoryMethodLogisticaTransporte.transporte.Transporte;
 
+import java.io.IOException;
+
 import static com.demo.FactoryMethodLogisticaTransporte.logistica.RutaEntrega.inicializarGraphHopper;
 
 
 public class LogisticaTierra extends Logistica {
     public double distancia;
+    public String tiempoFinal;
+    RutaEntrega rutaEntrega = new RutaEntrega();
     @Override
     public void planEntrega(String origen, String destino) {
         // Implementación específica para logística terrestre
+
         inicializarGraphHopper("car");
 
-        distancia = calcularDistancia(origen, destino);
+        distancia = rutaEntrega.calcularDistancia(origen, destino);
     }
 
     @Override
@@ -22,12 +27,14 @@ public class LogisticaTierra extends Logistica {
         return new Carro();
     }
     // Otros métodos y atributos específicos de la logística terrestre
-    public double calcularDistancia(String origen, String destino) {
-        RutaEntrega rutaEntrega = new RutaEntrega();
-        return rutaEntrega.calcularDistancia(origen, destino);
+
+    public String distanciaToString(){
+        return "Distancia a destino: " + (distancia / 1000) + " km";
     }
 
-    public String distanciaToString() {
-        return "Distancia entre Bogotá y Medellín: " + distancia + " km";
+    public String tiempoToString(){
+        tiempoFinal = rutaEntrega.tiempoToString();
+
+        return tiempoFinal;
     }
 }

@@ -1,5 +1,8 @@
 package com.demo.FactoryMethodLogisticaTransporte.logistica;
 
+import com.byteowls.jopencage.JOpenCageGeocoder;
+import com.byteowls.jopencage.model.JOpenCageForwardRequest;
+import com.byteowls.jopencage.model.JOpenCageResponse;
 import com.graphhopper.GHRequest;
 import com.graphhopper.GHResponse;
 import com.graphhopper.GraphHopper;
@@ -13,6 +16,12 @@ public class RutaEntrega {
     private String origen;
     private String destino;
     public double distancia;
+    public long horas;
+    public long minutos;
+    public long segundos;
+    public long milisegundos;
+    public String tiempoFinal;
+    private String desFinal;
     private static String tipoTransporte;
     private static GraphHopper hopper;
 
@@ -31,16 +40,52 @@ public class RutaEntrega {
         tipoTransporte = vehicle;
     }
 
+    public String Origen(String origen) {
+        // Implementación específica para logística terrestre
+        JOpenCageGeocoder jOpenCageGeocoder = new JOpenCageGeocoder("194750d2d69f433cb70efb4a89c3ddf7");
+
+        JOpenCageForwardRequest request = new JOpenCageForwardRequest(origen);
+
+        request.setMinConfidence(1);
+        request.setNoAnnotations(false);
+        request.setNoDedupe(true);
+
+        JOpenCageResponse response = jOpenCageGeocoder.forward(request);
+
+        desFinal = response.getResults().get(0).getGeometry().getLat().toString() + "," + response.getResults().get(0).getGeometry().getLng().toString();
+
+        return desFinal;
+    }
+
+    public String Destino(String destino) {
+        JOpenCageGeocoder jOpenCageGeocoder = new JOpenCageGeocoder("194750d2d69f433cb70efb4a89c3ddf7");
+
+        JOpenCageForwardRequest request = new JOpenCageForwardRequest(destino);
+
+        request.setMinConfidence(1);
+        request.setNoAnnotations(false);
+        request.setNoDedupe(true);
+
+        JOpenCageResponse response = jOpenCageGeocoder.forward(request);
+
+        desFinal = response.getResults().get(0).getGeometry().getLat().toString() + "," + response.getResults().get(0).getGeometry().getLng().toString();
+
+        return desFinal;
+    }
+
 
     public double calcularDistancia(String origen, String destino) {
-        GHPoint puntoOrigen = GHPoint.fromString(origen);
-        GHPoint puntoDestino = GHPoint.fromString(destino);
+        this.origen = Origen(origen);
+        this.destino = Destino(destino);
+        GHPoint puntoOrigen = GHPoint.fromString(this.origen);
+        GHPoint puntoDestino = GHPoint.fromString(this.destino);
 
         GHRequest request = new GHRequest(puntoOrigen, puntoDestino)
                 .setProfile(tipoTransporte);
         GHResponse response = hopper.route(request);
 
         distancia = response.getBest().getDistance();
+        milisegundos = response.getBest().getTime();
 
         if (response.hasErrors()) {
             System.out.println("Error al calcular la ruta de entrega: " + response.getErrors().get(0).getMessage());
@@ -49,4 +94,14 @@ public class RutaEntrega {
 
         return response.getBest().getDistance();
     }
+
+    public String tiempoToString(){
+        segundos = milisegundos / 1000;
+        horas = segundos / 3600;
+        minutos = (segundos % 3600) / 60;
+
+        tiempoFinal = "Tiempo de entrega: " + horas + " horas" + " " + minutos + " minutos" + " " + (segundos % 60) + " segundos";
+        return tiempoFinal;
+    }
+
 }
