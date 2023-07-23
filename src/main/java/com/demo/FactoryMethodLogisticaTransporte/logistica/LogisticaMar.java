@@ -5,7 +5,7 @@ import com.demo.FactoryMethodLogisticaTransporte.transporte.Transporte;
 
 public class LogisticaMar extends Logistica {
     @Override
-    public void planEntrega() {
+    public void planEntrega(String origen, String destino) {
         // Implementación específica para logística marítima
     }
 
