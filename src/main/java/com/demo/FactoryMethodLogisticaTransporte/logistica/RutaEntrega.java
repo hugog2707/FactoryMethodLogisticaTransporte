@@ -58,7 +58,7 @@ public class RutaEntrega {
     }
 
     public String Destino(String destino) {
-        JOpenCageGeocoder jOpenCageGeocoder = new JOpenCageGeocoder("194750d2d69f433cb70efb4a89c3ddf7");
+        JOpenCageGeocoder jOpenCageGeocoder = new JOpenCageGeocoder("YOUR-API-KEY");
 
         JOpenCageForwardRequest request = new JOpenCageForwardRequest(destino);
 
