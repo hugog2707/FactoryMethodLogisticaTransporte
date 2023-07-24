@@ -42,7 +42,7 @@ public class RutaEntrega {
 
     public String Origen(String origen) {
         // Implementación específica para logística terrestre
-        JOpenCageGeocoder jOpenCageGeocoder = new JOpenCageGeocoder("194750d2d69f433cb70efb4a89c3ddf7");
+        JOpenCageGeocoder jOpenCageGeocoder = new JOpenCageGeocoder("YOUR-API-KEY");
 
         JOpenCageForwardRequest request = new JOpenCageForwardRequest(origen);
 
