@@ -1,13 +1,12 @@
 package com.demo.FactoryMethodLogisticaTransporte.transporte;
 
-import com.demo.FactoryMethodLogisticaTransporte.models.Personal;
 import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
 @Entity
 @DiscriminatorValue("carro")
-public class Carro implements Transporte{
+public class Camion implements Transporte{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int idCarro;

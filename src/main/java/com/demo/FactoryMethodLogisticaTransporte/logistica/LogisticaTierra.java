@@ -1,9 +1,7 @@
 package com.demo.FactoryMethodLogisticaTransporte.logistica;
 
-import com.demo.FactoryMethodLogisticaTransporte.transporte.Carro;
+import com.demo.FactoryMethodLogisticaTransporte.transporte.Camion;
 import com.demo.FactoryMethodLogisticaTransporte.transporte.Transporte;
-
-import java.io.IOException;
 
 import static com.demo.FactoryMethodLogisticaTransporte.logistica.RutaEntrega.inicializarGraphHopper;
 
@@ -24,7 +22,7 @@ public class LogisticaTierra extends Logistica {
     @Override
     public Transporte fabrica() {
         // Implementación específica para crear transporte terrestre
-        return new Carro();
+        return new Camion();
     }
     // Otros métodos y atributos específicos de la logística terrestre
 
