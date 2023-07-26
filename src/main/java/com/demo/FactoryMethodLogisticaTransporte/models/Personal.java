@@ -10,13 +10,16 @@ public class Personal {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int idPersonal;
 
+    @Column(unique = true)
     public String nombre;
-    public String tipoDocumento;
+    @Column(unique = true)
     public String numeroDocumento;
+    @Column(unique = true)
+
+    public String correo;
+    public String tipoDocumento;
     public String direccion;
     public String telefono;
-    public String correo;
-    public String cargo;
     public String estado;
     public String fechaIngreso;
     public String fechaSalida;
