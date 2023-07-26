@@ -18,4 +18,12 @@ public class Productos {
     @ManyToOne
     @JoinColumn(name = "id_inventario")
     public Inventario inventario;
+
+    public Inventario getInventario() {
+        return inventario;
+    }
+
+    public void setInventario(Inventario inventario) {
+        this.inventario = inventario;
+    }
 }
