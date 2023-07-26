@@ -1,9 +1,6 @@
 package com.demo.FactoryMethodLogisticaTransporte.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
@@ -14,6 +11,8 @@ public class TipoInventario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int tipoInventarioId;
 
+    @Column(unique = true)
     public String nombre;
+
     public String descripcion;
 }
