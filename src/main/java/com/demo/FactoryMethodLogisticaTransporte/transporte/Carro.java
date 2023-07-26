@@ -1,15 +1,26 @@
 package com.demo.FactoryMethodLogisticaTransporte.transporte;
 
-import jakarta.persistence.Entity;
+import com.demo.FactoryMethodLogisticaTransporte.models.Personal;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
+@Entity
+@DiscriminatorValue("carro")
 public class Carro implements Transporte{
-    public int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public int idCarro;
+
     public String nombre;
     public String tipo;
     public String color;
     public String marca;
+    public int capacidad;
+
+    @OneToOne
+    @JoinColumn(name = "id_tipo_transporte")
+    public TipoTransporte tipoTransporte;
 
     @Override
     public void entrega() {

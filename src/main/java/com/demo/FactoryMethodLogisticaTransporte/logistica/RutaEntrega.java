@@ -24,6 +24,7 @@ public class RutaEntrega {
     private String desFinal;
     private static String tipoTransporte;
     private static GraphHopper hopper;
+    protected String apikey = "YOUR-API-KEY";
 
     public RutaEntrega() {
         // Constructor vacío
@@ -42,7 +43,7 @@ public class RutaEntrega {
 
     public String Origen(String origen) {
         // Implementación específica para logística terrestre
-        JOpenCageGeocoder jOpenCageGeocoder = new JOpenCageGeocoder("YOUR-API-KEY");
+        JOpenCageGeocoder jOpenCageGeocoder = new JOpenCageGeocoder(apikey);
 
         JOpenCageForwardRequest request = new JOpenCageForwardRequest(origen);
 
@@ -58,7 +59,7 @@ public class RutaEntrega {
     }
 
     public String Destino(String destino) {
-        JOpenCageGeocoder jOpenCageGeocoder = new JOpenCageGeocoder("YOUR-API-KEY");
+        JOpenCageGeocoder jOpenCageGeocoder = new JOpenCageGeocoder(apikey);
 
         JOpenCageForwardRequest request = new JOpenCageForwardRequest(destino);
 
@@ -77,6 +78,7 @@ public class RutaEntrega {
     public double calcularDistancia(String origen, String destino) {
         this.origen = Origen(origen);
         this.destino = Destino(destino);
+
         GHPoint puntoOrigen = GHPoint.fromString(this.origen);
         GHPoint puntoDestino = GHPoint.fromString(this.destino);
 
@@ -99,8 +101,8 @@ public class RutaEntrega {
         segundos = milisegundos / 1000;
         horas = segundos / 3600;
         minutos = (segundos % 3600) / 60;
-
         tiempoFinal = "Tiempo de entrega: " + horas + " horas" + " " + minutos + " minutos" + " " + (segundos % 60) + " segundos";
+
         return tiempoFinal;
     }
 

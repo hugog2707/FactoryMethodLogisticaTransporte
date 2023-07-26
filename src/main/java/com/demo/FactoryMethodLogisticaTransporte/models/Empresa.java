@@ -1,0 +1,23 @@
+package com.demo.FactoryMethodLogisticaTransporte.models;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.Data;
+
+@Entity
+@Data
+public class Empresa {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public int idEmpresa;
+    public String nombre;
+    public String direccion;
+    public String telefono;
+    public String email;
+    public String ruc;
+    public String razonSocial;
+    public String tipoEmpresa;
+    public String estado;
+}
