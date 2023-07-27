@@ -2,12 +2,15 @@ package com.demo.FactoryMethodLogisticaTransporte.controller;
 
 import com.demo.FactoryMethodLogisticaTransporte.models.*;
 import com.demo.FactoryMethodLogisticaTransporte.service.*;
+import com.demo.FactoryMethodLogisticaTransporte.utils.ErrorUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RequestMapping("/logisticaApi")
@@ -135,27 +138,24 @@ public class LogisticaController {
 
     @PostMapping("/guardarProductos")
     public ResponseEntity<String> guardarProducto(@RequestBody Productos[] producto) {
+        if (producto == null || producto.length == 0) {
+            return new ResponseEntity<>("No se a enviado ningun producto", HttpStatus.BAD_REQUEST);
+        }
+
         int contador = 0;
-        if (producto.length > 0) {
+        List<String> errores = new ArrayList<>();
+
             for (Productos p : producto) {
                 try {
-                    if (producto != null) {
-                        productosService.GuardarProducto(p);
-                        contador++;
-                    } else {
-                        System.out.println("Error al guardar producto: " + p.getNombre());
-                        return new ResponseEntity<>("Error al guardar producto: ", HttpStatus.NOT_FOUND);
-                    }
+                    productosService.GuardarProducto(p);
+                    contador++;
+                } catch (DataIntegrityViolationException e) {
+                    errores.add(ErrorUtils.buildMessageError("guardar producto", p.getNombre(), e));
                 } catch (Exception e) {
-                    if (e.getMessage().contains("Duplicate")) {
-                        return new ResponseEntity<>("Error al guardar producto: el producto ya existe", HttpStatus.CONFLICT);
-                    }
-                    return new ResponseEntity<>("Error al guardar producto: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+                    errores.add(ErrorUtils.buildMessageError("guardar producto", p.getNombre(), e));
                 }
-            }
-            return new ResponseEntity<>("Producto/s guardado/s, cantidad: " + contador, HttpStatus.CREATED);
         }
-        return new ResponseEntity<>("No se a enviado ningun producto", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>("Producto/s guardado/s, cantidad: " + contador, HttpStatus.CREATED);
     }
 
     @GetMapping("/obtenerProductos")
