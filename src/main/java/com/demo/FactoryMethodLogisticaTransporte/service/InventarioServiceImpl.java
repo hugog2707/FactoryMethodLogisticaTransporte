@@ -6,6 +6,8 @@ import com.demo.FactoryMethodLogisticaTransporte.repository.InventarioRepository
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class InventarioServiceImpl implements InventarioService {
     @Autowired
@@ -17,7 +19,12 @@ public class InventarioServiceImpl implements InventarioService {
     }
 
     @Override
-    public Inventario obtenerInventario(Long id) {
+    public List<Inventario> obtenerInventario() {
+        return inventarioRepository.findAll();
+    }
+
+    @Override
+    public Inventario obtenerInventarioPorId(Long id) {
         return inventarioRepository.findById(id).orElse(null);
     }
 
