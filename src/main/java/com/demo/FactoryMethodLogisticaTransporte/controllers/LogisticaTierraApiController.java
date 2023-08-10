@@ -1,4 +1,4 @@
-package com.demo.FactoryMethodLogisticaTransporte.controller;
+package com.demo.FactoryMethodLogisticaTransporte.controllers;
 
 import com.demo.FactoryMethodLogisticaTransporte.logistica.LogisticaTierra;
 import com.demo.FactoryMethodLogisticaTransporte.logistica.RutaEntrega;
