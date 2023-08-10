@@ -10,6 +10,8 @@ import com.graphhopper.config.Profile;
 import com.graphhopper.reader.osm.GraphHopperOSM;
 import com.graphhopper.util.shapes.GHPoint;
 import lombok.Data;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Data
 public class RutaEntrega {
@@ -24,7 +26,9 @@ public class RutaEntrega {
     private String desFinal;
     private static String tipoTransporte;
     private static GraphHopper hopper;
-    protected String apikey = "YOUR-API-KEY";
+    protected String apikey = "YOUR_API_KEY";
+    // instance logger
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     public RutaEntrega() {
         // Constructor vacío
@@ -41,7 +45,7 @@ public class RutaEntrega {
         tipoTransporte = vehicle;
     }
 
-    public String Origen(String origen) {
+    public String setOrigen(String origen) {
         // Implementación específica para logística terrestre
         JOpenCageGeocoder jOpenCageGeocoder = new JOpenCageGeocoder(apikey);
 
@@ -58,7 +62,7 @@ public class RutaEntrega {
         return desFinal;
     }
 
-    public String Destino(String destino) {
+    public String setDestino(String destino) {
         JOpenCageGeocoder jOpenCageGeocoder = new JOpenCageGeocoder(apikey);
 
         JOpenCageForwardRequest request = new JOpenCageForwardRequest(destino);
@@ -76,8 +80,8 @@ public class RutaEntrega {
 
 
     public double calcularDistancia(String origen, String destino) {
-        this.origen = Origen(origen);
-        this.destino = Destino(destino);
+        this.origen = setOrigen(origen);
+        this.destino = setDestino(destino);
 
         GHPoint puntoOrigen = GHPoint.fromString(this.origen);
         GHPoint puntoDestino = GHPoint.fromString(this.destino);
@@ -90,7 +94,7 @@ public class RutaEntrega {
         milisegundos = response.getBest().getTime();
 
         if (response.hasErrors()) {
-            System.out.println("Error al calcular la ruta de entrega: " + response.getErrors().get(0).getMessage());
+            logger.error("Error al calcular la ruta de entrega: " + response.getErrors().get(0).getMessage());
             return 0;
         }
 
