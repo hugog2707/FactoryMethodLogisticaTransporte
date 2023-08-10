@@ -1,4 +1,4 @@
-package com.demo.FactoryMethodLogisticaTransporte.repository;
+package com.demo.FactoryMethodLogisticaTransporte.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import com.demo.FactoryMethodLogisticaTransporte.models.Cargo;
