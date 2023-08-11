@@ -28,6 +28,8 @@ public class LogisticaController {
     private CargoServiceImpl cargoService;
     @Autowired
     private ProductosServiceImpl productosService;
+    @Autowired
+    private HistorialProductosServiceImpl historialProductosService;
     // instance logger
     private static final Logger logger = LoggerFactory.getLogger(LogisticaController.class);
 
@@ -249,6 +251,22 @@ public class LogisticaController {
     @GetMapping("/obtenerProductos")
     public Iterable<Productos> obtenerProducto() {
         return productosService.obtenerProductos();
+    }
+
+    @GetMapping("/obtenerHistorial")
+    public Iterable<HistorialProductos> obtenerHistorial() {
+        if (historialProductosService.getHistorialProductos().isEmpty()) {
+            return null;
+        }
+        return historialProductosService.getHistorialProductos();
+    }
+
+    @GetMapping("/obtenerHistorial/{fecha}")
+    public Iterable<HistorialProductos> obtenerHistorialPorFecha(@PathVariable String fecha) {
+        if (historialProductosService.getHistorialProductosByFecha(fecha).isEmpty()) {
+            return null;
+        }
+        return historialProductosService.getHistorialProductosByFecha(fecha);
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
