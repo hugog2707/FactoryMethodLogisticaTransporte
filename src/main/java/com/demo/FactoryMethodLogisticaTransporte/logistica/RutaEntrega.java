@@ -45,7 +45,7 @@ public class RutaEntrega {
         tipoTransporte = vehicle;
     }
 
-    public String setOrigen(String origen) {
+    private String setOrigen(String origen) {
         // Implementación específica para logística terrestre
         JOpenCageGeocoder jOpenCageGeocoder = new JOpenCageGeocoder(apikey);
 
@@ -62,7 +62,7 @@ public class RutaEntrega {
         return desFinal;
     }
 
-    public String setDestino(String destino) {
+    private String setDestino(String destino) {
         JOpenCageGeocoder jOpenCageGeocoder = new JOpenCageGeocoder(apikey);
 
         JOpenCageForwardRequest request = new JOpenCageForwardRequest(destino);
